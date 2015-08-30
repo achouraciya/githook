@@ -1,0 +1,39 @@
+<form name="addCoverageForm" rc-submit="addCoverageCtrl.insertCoverageDetails()" novalidate>
+    <div class="clearfix">
+        <div class="clearfix z-index-1 box-shadow-bottom-3px">
+            <div class="col-sm-12 background-color-ffffff border-bottom-d4d4d4">
+                <div class="pull-left padding-top-5px padding-bottom-5px">
+                    <button ng-if="addCoverageCtrl.allowPatientInfoSave && addCoverageCtrl.pat_access!='Y' && addCoverageCtrl.isMemberSourceAllowed"
+                            j-btn="Ze Patient AddPatientCoverageInfo"
+                            class="btn btn-success"
+                            type="submit" >
+                        Save
+                    </button>
+                    <button class="btn btn-default"
+                            type="button"
+                            ng-click="addCoverageCtrl.closeScreen()" translate>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8"
+                                                 ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.groupName)}">
+                                                <div class="input-group inner-addon right-addon">
+                                                    <i ng-show="last" class="fa fa-spinner"></i>
+                                                    <input type="text"
+                                                           placeholder="Group Name" class="form-control"
+                                                           typeahead="cegRecord.GROUP_NAME as cegRecord.GROUP_NAME for cegRecord in addCoverageCtrl.getCEGDetailsList($viewValue, 10)"
+                                                           typeahead-loading="last"
+                                                           name="groupName"
+                                                           ng-required="true"
+                                                           ng-model="addCoverageCtrl.requestFormData.I_GROUP_NAME"
+                                                           typeahead-on-select="addCoverageCtrl.updateCEGFields($item)"
+                                                           typeahead-min-length="3"/>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-search"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+</form>

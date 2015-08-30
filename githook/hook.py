@@ -1,4 +1,5 @@
 import os,subprocess,re, warnings, time
+from bs4 import BeautifulSoup
 def hookOnCommit():
     output_f = open('commit.txt', 'w')
     content=subprocess.Popen(["git", "log", "-1"], stdout=output_f,stderr=output_f)
@@ -28,13 +29,19 @@ def hookOnCommit():
          #   warnings.warn("<<<<<<<<<<<<<< missing security declaration >>>>>>>>>>>>>>>")
     #else:
      #   exit() 
-        if re.match("(.*)def(.*)", data):
-            if "security.declareProtected" not in data:
-                warnings.warn("<<<<<<<<<<<<<< missing security declaration >>>>>>>>>>>>>>>")
-            else:
-                exit()
+        # if re.match("(.*)def(.*)", data):
+        #     if "security.declareProtected" not in data:
+        #         warnings.warn("<<<<<<<<<<<<<< missing security declaration >>>>>>>>>>>>>>>")
+        #     else:
+        #         exit()
+        # else:
+        #     exit()
+        if re.findall('<.*?>', data):
+            match = re.findall('<.*?>', data)
+            soup = BeautifulSoup(data)
+            print soup.a
+            print soup.a.string
         else:
             exit()
-
 
 hookOnCommit()
