@@ -1,0 +1,301 @@
+<form name="addCoverageForm" rc-submit="addCoverageCtrl.insertCoverageDetails()" novalidate>
+    <div class="clearfix">
+        <div class="clearfix z-index-1 box-shadow-bottom-3px">
+            <div class="col-sm-12 background-color-ffffff border-bottom-d4d4d4">
+                <div class="pull-left padding-top-5px padding-bottom-5px">
+                    <button ng-if="addCoverageCtrl.allowPatientInfoSave && addCoverageCtrl.pat_access!='Y' && addCoverageCtrl.isMemberSourceAllowed"
+                            j-btn="Ze Patient AddPatientCoverageInfo"
+                            class="btn btn-success"
+                            type="submit" translate>
+                        Save
+                    </button>
+                    <button class="btn btn-default"
+                            type="button"
+                            ng-click="addCoverageCtrl.closeScreen()" translate>
+                        Cancel
+                    </button>
+                </div>
+            </div
+        </div>
+        <div class="clearfix">
+            <div class="col-sm-12 margin-top-20px">
+                <div class="clearfix">
+                    <div class="left-panel-190px padding-top-10px padding-bottom-10px">
+                        <div class="container">
+                            <div class="text-right bold-text" translate>
+                                Policy Details
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-panel-with-left-190px border-bottom-d4d4d4 margin-bottom-20px">
+                        <div class="clearfix">
+                            <div class="col-sm-12 margin-bottom-5px padding-bottom-20px border-left-d4d4d4 with-right-arrow">
+                                <div class="row">
+                                    <div class="col-md-6 padding-top-15px form-horizontal">
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-4 control-label required">
+                                                <j-label jname="group"></j-label>
+                                            </label>
+
+                                            <div class="col-md-8"
+                                                 ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.groupName)}">
+                                                <div class="input-group inner-addon right-addon">
+                                                    <i ng-show="last" class="fa fa-spinner"></i>
+                                                    <input type="text"
+                                                           placeholder="Group Name" class="form-control"
+                                                           typeahead="cegRecord.GROUP_NAME as cegRecord.GROUP_NAME for cegRecord in addCoverageCtrl.getCEGDetailsList($viewValue, 10)"
+                                                           typeahead-loading="last"
+                                                           name="groupName"
+                                                           ng-required="true"
+                                                           ng-model="addCoverageCtrl.requestFormData.I_GROUP_NAME"
+                                                           typeahead-on-select="addCoverageCtrl.updateCEGFields($item)"
+                                                           typeahead-min-length="3"/>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-search"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">
+                                                <j-label jname="tpa"></j-label>
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="addCoverageCtrl.requestFormData.I_PAYOR_NAME"
+                                                       ng-disabled="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">
+                                                <j-label jname="employer"></j-label>
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="addCoverageCtrl.requestFormData.I_EMP_NAME"
+                                                       ng-disabled="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group"
+                                             ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.productType)}">
+                                            <j-var jivavar="I_PROD_TYPE_CD"
+                                                   target-ng-model="addCoverageCtrl.requestFormData.I_PRODUCT_TYPE"
+                                                   formname="addCoverageForm" target-name="productType"
+                                                   ctrl="addCoverageCtrl"
+                                                   selecturl="Lookup/Controller/getActiveProductTypes"
+                                                   filltext="DESCRIPTION" value="PRD_TYPE_CD"
+                                                   required="true" labelcol="4"
+                                                   inputcol="8" extralabelclass="control-label">
+                                            </j-var>
+                                        </div>
+
+                                        <div class="form-group has-feedback">
+                                            <label class="col-md-4 control-label" translate>
+                                                <span class="font-color-e93207"></span>
+                                                PCP
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <div class="input-group inner-addon right-addon">
+                                                    <i ng-show="lastprv" class="fa fa-spinner"></i>
+                                                    <input type="text"
+                                                           placeholder="Provider Name" class="form-control"
+                                                           typeahead="pcpRecord.PRV_NAME as pcpRecord.PRV_NAME for pcpRecord in addCoverageCtrl.getPCPDetailsList($viewValue, 10)"
+                                                           typeahead-loading="lastprv"
+                                                           ng-model="addCoverageCtrl.requestFormData.I_PROVIDER_NAME"
+                                                           typeahead-on-select="addCoverageCtrl.updatePCPFields($item)"
+                                                           typeahead-min-length="3"/>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-search"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label required" translate>
+                                                Effective Date
+                                            </label>
+
+                                            <div class="col-md-8"
+                                                 ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.effectiveDate)}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="addCoverageCtrl.I_PAT_EFFECTIVE_DT"
+                                                           name="effectiveDate"
+                                                           ng-required="true"
+                                                           ng-change="addCoverageCtrl.validateWithTermDateField()"
+                                                           datepicker-popup="{{ addCoverageCtrl.datepickerFormat }}"
+                                                           is-open="addCoverageCtrl.allCals.svcEffectiveDate"
+                                                           datepicker-options="addCoverageCtrl.dateOptions"
+                                                           close-text="Close">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"
+                                                           ng-click="addCoverageCtrl.toggleCall($event, 'svcEffectiveDate')"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group"
+                                             ng-class="{'has-error': addCoverageCtrl.isTermDateValid()}">
+                                            <label class="col-md-4 control-label" translate>
+                                                Term Date
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="addCoverageCtrl.I_PAT_TERM_DT"
+                                                           name="termDate"
+                                                           min-date="addCoverageCtrl.I_PAT_EFFECTIVE_DT"
+                                                           datepicker-popup="{{ addCoverageCtrl.datepickerFormat }}"
+                                                           is-open="addCoverageCtrl.allCals.svcTermDate"
+                                                           datepicker-options="addCoverageCtrl.dateOptions"
+                                                           close-text="Close">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"
+                                                           ng-click="addCoverageCtrl.toggleCall($event, 'svcTermDate')"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 padding-top-15px form-horizontal">
+                                        <div class="form-group"
+                                             ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.eligStatus)}">
+                                            <j-var jivavar="I_ELG_STATUS_CD"
+                                                   target-ng-model="addCoverageCtrl.requestFormData.I_ELG_STATUS_CD"
+                                                   formname="addCoverageForm" target-name="eligStatus"
+                                                   ctrl="addCoverageCtrl"
+                                                   selecturl="Lookup/Controller/getEligibilityStatus"
+                                                   filltext="DESCRIPTION" value="STATUS_CD"
+                                                   required="true" labelcol="4"
+                                                   inputcol="8" extralabelclass="control-label">
+                                            </j-var>
+                                        </div>
+
+                                        <div class="form-group"
+                                             ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.patRelation)}">
+                                            <div class="input-group">
+                                                <j-var jivavar="I_PAT_RELATION"
+                                                       target-ng-model="addCoverageCtrl.requestFormData.I_PAT_RELATION"
+                                                       formname="addCoverageForm" target-name="patRelation"
+                                                       ctrl="addCoverageCtrl"
+                                                       selecturl="Lookup/Controller/getPatRelationDetails"
+                                                       filltext="DESCRIPTION" value="FAMILY_RELATION_TYPE_IDN"
+                                                       required="true" labelcol="4"
+                                                       inputcol="8" extralabelclass="control-label">
+                                                </j-var>
+                                                <a class="input-group-addon background-color-ffffff"
+                                                   ng-class="{ 'disabled': addCoverageCtrl.requestFormData.I_PAT_RELATION === 18 || !addCoverageCtrl.requestFormData.I_PAT_RELATION }"
+                                                   ng-click="addCoverageCtrl.requestFormData.I_PAT_RELATION && addCoverageCtrl.requestFormData.I_PAT_RELATION !== 18 && addCoverageCtrl.setInsuredMemberInfoDetails()">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div ng-if="addCoverageCtrl.requestFormData.I_PAT_RELATION === 18">
+                                                <j-var jivavar="pat_relation"
+                                                       target-ng-model="addCoverageCtrl.requestFormData.pat_relation"
+                                                       formname="addCoverageForm" target-name="covType"
+                                                       ctrl="addCoverageCtrl"
+                                                       selecturl="Lookup/Controller/getCodeCoverageValues"
+                                                       filltext="CVG_DESC" value="CODE_CVG_IDN" required="false"
+                                                       labelcol="4"
+                                                       inputcol="8" extralabelclass="control-label">
+                                                </j-var>
+                                            </div>
+                                            <div ng-if="addCoverageCtrl.requestFormData.I_PAT_RELATION !== 18"
+                                                 ng-class="{'has-error': rc.addCoverageForm.needsAttention(addCoverageForm.covType)}">
+                                                <j-var jivavar="pat_relation"
+                                                       target-ng-model="addCoverageCtrl.requestFormData.pat_relation"
+                                                       formname="editCoverageForm" target-name="covType"
+                                                       ctrl="addCoverageCtrl"
+                                                       selecturl="Lookup/Controller/getCodeCoverageValues"
+                                                       filltext="CVG_DESC" value="CODE_CVG_IDN" required="true"
+                                                       labelcol="4"
+                                                       inputcol="8" extralabelclass="control-label">
+                                                </j-var>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" translate>
+                                                Plan Name
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="addCoverageCtrl.requestFormData.I_POLICY">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" translate>
+                                                Plan Number
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="addCoverageCtrl.requestFormData.I_POLICY_NUM">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" translate>
+                                                Policy Number
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="addCoverageCtrl.requestFormData.I_POLICY_NO">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" translate>
+                                                Coverage ID
+                                            </label>
+
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="addCoverageCtrl.requestFormData.I_EXT_CVG_ID">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <insured-member-info insd-mbr-idn="addCoverageCtrl.insd_mbr_idn"></insured-member-info>
+                <div class="clearfix">
+                    <div class="right-panel-with-left-190px margin-bottom-20px">
+                        <div class="clearfix">
+                            <div class="col-sm-12">
+                                <button ng-if="addCoverageCtrl.allowPatientInfoSave && addCoverageCtrl.pat_access!='Y' && addCoverageCtrl.isMemberSourceAllowed"
+                                        j-btn="Ze Patient AddPatientCoverageInfo"
+                                        class="btn btn-success"
+                                        type="submit" translate>
+                                    Save
+                                </button>
+                                <button class="btn btn-default"
+                                        type="button"
+                                        ng-click="addCoverageCtrl.closeScreen()" translate>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
